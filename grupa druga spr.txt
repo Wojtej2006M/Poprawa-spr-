@@ -1,0 +1,78 @@
+internal class Program 
+{
+    static void Main(string[] args)
+    {
+        Layout layout = new Layout();
+        layout.ShowElementList();
+    }
+}
+interface Blokowe
+{
+    void WyswietlBlok();
+}
+interface Liniowe
+{
+    void WyswietlLinie();
+}
+abstract class AabstracDisplay
+{
+ 
+}
+class html : AabstracDisplay,Blokowe,Liniowe
+{
+    public void WyswietlBlok()
+    {
+    }
+    public void WyswietlLinie()
+    { 
+    }
+}
+class json : AabstracDisplay
+{ 
+}
+class pdf : AabstracDisplay
+{
+}
+abstract class Element
+{
+    public abstract void WyswietlInfo();
+
+}
+class b : Element, Blokowe
+{
+    public override void WyswietlInfo() { }
+    public void WyswietlBlok()
+    {
+    }
+
+}
+class div : Element, Liniowe
+{
+    public override void WyswietlInfo() { }
+    public void WyswietlLinie()
+    {
+    }
+}
+class span:Element,Blokowe
+{
+    public override void WyswietlInfo() { }
+    public void WyswietlBlok()
+    {
+    }
+}
+class Layout : html
+{
+    List<Element> list = new List<Element>()
+    {
+        new div{ },
+        new b{ },
+        new span{ },
+    };
+    public void ShowElementList()
+    {
+        foreach (Element element in list)
+        {
+            Console.WriteLine(element);
+        }
+    }
+}

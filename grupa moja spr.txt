@@ -1,0 +1,128 @@
+using System;
+using System.Runtime.CompilerServices;
+class Program
+{
+    static void Main()
+    {
+        MyPage myPage=new MyPage();
+        myPage.WebContent();
+    }
+}
+interface IColumne
+{
+    void AddColumnToSection(Column column);
+}
+interface IFloatable
+{
+    void FloatLeft();
+    void ClearBoth();
+}
+abstract class SectionDisplay 
+{
+    public List<Column> Columns = new List<Column>(); 
+}
+class Normal:SectionDisplay,IColumne,IFloatable
+{
+    public bool Visible { get; set; }
+    public void AddColumnToSection(Column column)
+    {
+        if (this.Columns.Count<5)
+        {
+            this.Columns.Add(column);
+        }
+    }
+   public void FloatLeft() 
+    {
+    }
+   public void ClearBoth()
+    {
+    }
+
+}
+class Fullwidth:SectionDisplay
+{
+}
+class Fixed:SectionDisplay
+{
+}
+class Column
+{
+    public ModuleAbstract Module { get; set; }
+    public string name { get; set; }
+    public int width { get; set; }
+    public bool display { get; set; }
+}
+abstract class ModuleAbstract
+{
+}
+class TextModule : ModuleAbstract
+{
+    public string TextContent { get; set; }
+
+}
+class ImageModule : ModuleAbstract
+{
+    public int Height { get; set; }
+    public int Width { get; set; }
+}
+class SliderModule : ModuleAbstract
+{
+    public List<ImageModule>Image=new List<ImageModule>();
+}
+class MyPage {
+    public void WebContent()
+    {
+        Normal layOut = new Normal();
+
+        Column column1 = new Column();
+
+        ImageModule imgModule = new ImageModule();
+        imgModule.Height = 100;
+        imgModule.Width = 100;
+
+        column1.width = 100;
+        column1.display = true;
+        column1.name = "kolumna1";
+        column1.Module = imgModule;
+
+        Column column2 = new Column();
+
+        TextModule textModule = new TextModule();
+        textModule.TextContent = "Ania ma kota";
+
+        column2.width = 100;
+        column2.display = true;
+        column2.name = "kolumna2";
+        column2.Module = textModule;
+
+        Column column3 = new Column();
+
+        SliderModule sliderModule = new SliderModule();
+        sliderModule.Image.Add(imgModule);
+
+        column3.width = 100;
+        column3.display = true;
+        column3.name = "kolumna3";
+        column3.Module = sliderModule;
+
+        layOut.Visible = true;
+        Console.WriteLine("Column 1");
+        Console.WriteLine($"Name: {column1.name}");
+        Console.WriteLine($"Display: {column1.display}");
+        Console.WriteLine($"Width: {column1.width}");
+        Console.WriteLine($"Module: {column1.Module}");
+        Console.WriteLine();
+        Console.WriteLine("Column 2");
+        Console.WriteLine($"Name: {column2.name}");
+        Console.WriteLine($"Display: {column2.display}");
+        Console.WriteLine($"Width: {column2.width}");
+        Console.WriteLine($"Module: {column2.Module}");
+        Console.WriteLine();
+        Console.WriteLine("Column 3");
+        Console.WriteLine($"Name: {column3.name}");
+        Console.WriteLine($"Display: {column3.display}");
+        Console.WriteLine($"Width: {column3.width}");
+        Console.WriteLine($"Module: {column3.Module}");
+
+    }
+}
